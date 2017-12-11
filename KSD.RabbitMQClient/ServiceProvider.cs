@@ -10,7 +10,11 @@ namespace KSD.RabbitMQClient {
         private static HttpClient consumerClient = new HttpClient();
         private static HttpClient producerClient = new HttpClient();
 
-        public Producer GetProducer() {
+        public ServiceProvider() {
+
+        }
+
+        public Producer GetProducer(string routingKey, IDictionary<string, object> data) {
 
         }
 
