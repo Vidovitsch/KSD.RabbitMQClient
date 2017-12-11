@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KSD.RabbitMQClient
-{
-    class Consumer
-    {
+namespace KSD.RabbitMQClient {
+
+    public class Consumer {
+
     }
 }

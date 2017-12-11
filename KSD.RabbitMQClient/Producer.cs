@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -7,11 +8,20 @@ namespace KSD.RabbitMQClient {
 
     public class Producer {
 
-        public string Produce() {
+        private HttpClient http;
+        private string routingKey;
+        private object payload;
 
+        public Producer(HttpClient http) {
+            this.http = http;
         }
 
-        public async Task<string> ProduceAsync() {
+        public Producer(string routingKey, object payload) {
+            this.routingKey = routingKey;
+            this.payload = payload;
+        }
+
+        public async Task<string> ProduceAsync(string routingKey, object payload) {
 
         }
     }
