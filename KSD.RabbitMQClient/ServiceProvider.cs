@@ -11,7 +11,9 @@ namespace KSD.RabbitMQClient {
         private static HttpClient producerClient = null;
         private static HttpClient consumerClient = null;
 
-        public ServiceProvider(Assembly assembly) {
+        private string username;
+        private string password;
+        public ServiceProvider(string username, string password) {
 
         }
 

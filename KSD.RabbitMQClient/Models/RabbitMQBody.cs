@@ -10,7 +10,7 @@ namespace KSD.RabbitMQClient.Models {
 
         public string routing_key { get; set; }
         
-        public string payload { get; set; }
+        public object payload { get; set; }
 
         public string payload_encoding { get; set; }
     }
