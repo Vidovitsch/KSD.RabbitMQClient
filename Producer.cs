@@ -11,15 +11,13 @@ namespace KSD.RabbitMQClient {
 
     public class Producer {
 
-        private HttpClient http;
-        private string routingKey;
-        private object payload;
+        private HttpClient http = null;
 
         public Producer(HttpClient http) {
             this.http = http;
         }
 
-        public async Task<string> ProduceAsync(string username, string password, string routingKey, object payload) {
+        public string Produce(string username, string password, string routingKey, object payload) {
             // Create JSON-object from payload
             string jsonPayload = JsonConvert.SerializeObject(payload);
             RabbitMQBody rabbitMQBody = CreateBody(routingKey, jsonPayload);
@@ -28,10 +26,11 @@ namespace KSD.RabbitMQClient {
             string jsonBody = JsonConvert.SerializeObject(rabbitMQBody);
             StringContent stringContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(username, password);
-            HttpResponseMessage response = await http.PostAsync("", stringContent);
+            var byteArray = Encoding.ASCII.GetBytes(username + ":" + password);
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            HttpResponseMessage response = http.PostAsync("", stringContent).Result;
 
-            return await response.Content.ReadAsStringAsync();
+            return response.Content.ReadAsStringAsync().Result;
         }
 
         private RabbitMQBody CreateBody(string routingKey, object payload) {

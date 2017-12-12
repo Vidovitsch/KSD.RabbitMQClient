@@ -13,14 +13,15 @@ namespace KSD.RabbitMQClient {
 
         public ServiceProvider(string vhost, string exchange, string host, string port = "15672") {
             Uri url = new Uri(new StringBuilder().AppendFormat("http://{0}:{1}/api/exchanges/{2}/{3}/publish", host, port, vhost, exchange).ToString());
-            if (producerClient == null || producerClient.BaseAddress.ToString().Equals(url.ToString())) {
+            if (producerClient == null || !producerClient.BaseAddress.ToString().Equals(url.ToString())) {
+                producerClient = new HttpClient();
                 producerClient.BaseAddress = url;
             }
 
             // To Do: Add Uri for consumerClient
         }
 
-        public Producer GetProducer(string vhost, string exchange, string host, string port = "15672") {
+        public Producer GetProducer() {
             return new Producer(producerClient);
         }
 
